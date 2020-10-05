@@ -124,7 +124,7 @@ public class Des {
       return 0;
     }
     else {
-      return this.totalDes();
+      return totalDes();
   }
 }
 

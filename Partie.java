@@ -106,19 +106,19 @@ public class Partie {
                     break;
             case 6: tableau[choix-1].valeur = des.somme(6);
                     break;
-            case 7: tableau[choix-1].valeur = des.somme(des.brelan());
+            case 7: tableau[choix].valeur = des.somme(des.brelan());
                     break;
-            case 8: tableau[choix-1].valeur = des.somme(des.carre());
+            case 8: tableau[choix].valeur = des.somme(des.carre());
                     break;              
-            case 9: tableau[choix-1].valeur = des.full();
+            case 9: tableau[choix].valeur = des.full();
                     break;
-            case 10: tableau[choix-1].valeur = des.petiteSuite();
+            case 10: tableau[choix].valeur = des.petiteSuite();
                 break;
-            case 11: tableau[choix-1].valeur = des.grandeSuite(); 
+            case 11: tableau[choix].valeur = des.grandeSuite(); 
                      break;
-            case 12: tableau[choix-1].valeur = des.yams();
+            case 12: tableau[choix].valeur = des.yams();
                     break;
-            case 13: tableau[choix-1].valeur = des.totalDes();
+            case 13: tableau[choix].valeur = des.totalDes();
                     break;                        
             default: System.out.println("Erreur");
             }
@@ -143,7 +143,9 @@ public class Partie {
         tableau[3] = new Combinaison("Somme des 4");
         tableau[4] = new Combinaison("Somme des 5");
         tableau[5] = new Combinaison("Somme des 6");
+
         tableau[6] = new Combinaison("Bonus si > à 62");
+
         tableau[7] = new Combinaison("Brelan");
         tableau[8] = new Combinaison("Carré");
         tableau[9] = new Combinaison("Full");
@@ -162,10 +164,10 @@ public class Partie {
                 System.out.println((i+1) + ". Mettre " + des.somme(i+1) + " dans les " + (i+1));
                 }
                 switch(i){
-                    case 6: System.out.println((i+1) + ". Mettre " + des.brelan() + " dans le brelan");
+                    case 6: System.out.println((i+1) + ". Mettre " + des.somme(des.brelan()) + " dans le brelan");
                     break;
 
-                    case 7: System.out.println((i+1) + ". Mettre " + des.carre() + " dans le carré");
+                    case 7: System.out.println((i+1) + ". Mettre " + des.somme(des.carre()) + " dans le carré");
                     break;
 
                     case 8: System.out.println((i+1) + ". Mettre " + des.full() + " dans le full");
