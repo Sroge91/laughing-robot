@@ -1,7 +1,7 @@
 public class Combinaison {
-    String nom;
-    int valeur = 0;
-    boolean notSelected =true;
+    private String nom;
+    private int valeur = 0;
+    private boolean notSelected =true;
 
     void affiche(){
         System.out.println("Vous avez choisi :");
@@ -28,5 +28,21 @@ public class Combinaison {
         else {
             System.out.println(nom + " : " + valeur);
         }
+    }
+
+    void setValeur(int x){
+        this.valeur = x;
+    }
+
+    int getValeur(){
+        return this.valeur;
+    }
+
+    void selected(){
+        this.notSelected = false;
+    }
+
+    boolean getNotSelected(){
+        return this.notSelected;
     }
 }

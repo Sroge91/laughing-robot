@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class Des {
-    int[] dés_lancés;
+    private int[] dés_lancés;
 
     public Des(){
       dés_lancés = new int[5];
@@ -186,17 +186,12 @@ public class Des {
 
   int petiteSuite(){
     this.trier();
-    int compteur=0;
+    int compteur=1;
     for(int i=0; i<4;i++){
       if ((dés_lancés[i]+1) == dés_lancés[i+1]) compteur++;
+      else compteur =1;
     }
-    if (compteur <= 2){
-      compteur =0;
-      for(int i=1; i<4;i++){
-        if ((dés_lancés[i]+1) == dés_lancés[i+1]) compteur++;
-     }
-    }
-    if (compteur >= 3) return 30;
+    if (compteur >= 4) return 30;
     else return 0;
   }
 

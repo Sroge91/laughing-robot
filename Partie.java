@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 
 public class Partie {
-    int nb_tour=0;
-    Combinaison[] tableau;
-    Des hand;
+    private int nb_tour=0;
+    private Combinaison[] tableau;
+    private Des hand;
 
     void begin(){
         nb_tour = 0;
@@ -18,7 +18,6 @@ public class Partie {
         pause.nextLine();
         nouvelleManche();
         } while (nb_tour < 13);
-        bonus();
         end();
     }
 
@@ -85,56 +84,87 @@ public class Partie {
         System.out.println("---------------------------------------------");
         System.out.println("\nQue souhaitez-vous faire ? Saisir un numéro");
         Scanner choixCombinaison = new Scanner(System.in);
-        int choix = 0;
+        int choix = 1;
+        int indexTableau = 0;
         do{
         choix = choixCombinaison.nextInt();
-        } while (choix < 1 || choix >13);
-        
-        if(tableau[choix-1].notSelected == true){
-            tableau[choix-1].notSelected = false;   
-        }            
+        indexTableau = choix-1;
+        } while ((choix < 1 || choix >13) && tableau[indexTableau].getNotSelected() == true); //empêche l'utilisateur de saisir une valeur incorrecte
+
+        tableau[indexTableau].selected();
+
         switch(choix){
-            case 1: tableau[choix-1].valeur = des.somme(1);
+            case 1: tableau[indexTableau].setValeur(des.somme(1));
+                    tableau[13].selected();
+                    tableau[15].selected();
                     break;
-            case 2: tableau[choix-1].valeur = des.somme(2);
+            case 2: tableau[indexTableau].setValeur(des.somme(2));
+                    tableau[13].selected();
+                    tableau[15].selected();
                     break;
-            case 3: tableau[choix-1].valeur = des.somme(3);
+            case 3: tableau[indexTableau].setValeur(des.somme(3));
+                    tableau[13].selected();
+                    tableau[15].selected();
                     break;
-            case 4: tableau[choix-1].valeur = des.somme(4);
+            case 4: tableau[indexTableau].setValeur(des.somme(4));
+                    tableau[13].selected();
+                    tableau[15].selected();
                     break;
-            case 5: tableau[choix-1].valeur = des.somme(5);
+            case 5: tableau[indexTableau].setValeur(des.somme(5));
+                    tableau[13].selected();
+                    tableau[15].selected();
                     break;
-            case 6: tableau[choix-1].valeur = des.somme(6);
+            case 6: tableau[indexTableau].setValeur(des.somme(6));
+                    tableau[13].selected();
+                    tableau[15].selected();
                     break;
-            case 7: tableau[choix].valeur = des.somme(des.brelan());
+            case 7: tableau[indexTableau].setValeur(des.valeurBrelan());
+                    tableau[16].selected();
                     break;
-            case 8: tableau[choix].valeur = des.somme(des.carre());
+            case 8: tableau[indexTableau].setValeur(des.valeurCarre()); 
+                    tableau[16].selected();
                     break;              
-            case 9: tableau[choix].valeur = des.full();
+            case 9: tableau[indexTableau].setValeur(des.full());
+                    tableau[16].selected();    
                     break;
-            case 10: tableau[choix].valeur = des.petiteSuite();
-                break;
-            case 11: tableau[choix].valeur = des.grandeSuite(); 
-                     break;
-            case 12: tableau[choix].valeur = des.yams();
+            case 10: tableau[indexTableau].setValeur(des.petiteSuite());
+                    tableau[16].selected();
                     break;
-            case 13: tableau[choix].valeur = des.totalDes();
+            case 11: tableau[indexTableau].setValeur(des.grandeSuite());
+                    tableau[16].selected(); 
+                    break;
+            case 12: tableau[indexTableau].setValeur(des.yams());
+                    tableau[16].selected();
+                    break;
+            case 13: tableau[indexTableau].setValeur(des.totalDes());
+                    tableau[16].selected();
                     break;                        
             default: System.out.println("Erreur");
             }
-        }  
+            tableau[17].selected();
+            bonus();
+            calculScore();
+        }
         
 
     void afficheTableau(){
         System.out.println("----------\n    TABLEAU DE SCORE\n----------");
-        for (int i=0;i<14;i++){
+        for (int i=0;i<6;i++){
             tableau[i].afficheCombinaison();
+        }
+        tableau[13].afficheCombinaison(); //sous-total 1
+        tableau[14].afficheCombinaison(); //Bonus si > à 62
+        tableau[15].afficheCombinaison(); // TOTAL 1
+        for (int i=6; i<18;i++){
+            if (i != 13 && i != 14 && i != 15){ //condition pour ne pas re-afficher les combinaisons ci-dessus
+                tableau[i].afficheCombinaison(); 
+            }
         }
     }
 
     Combinaison[] init(){
-        tableau = new Combinaison[14];
-        for (int i=0; i<14; i++){
+        tableau = new Combinaison[18];
+        for (int i=0; i<18; i++){
             tableau[i] = null;
         }
         tableau[0] = new Combinaison("Somme des 1");
@@ -144,30 +174,34 @@ public class Partie {
         tableau[4] = new Combinaison("Somme des 5");
         tableau[5] = new Combinaison("Somme des 6");
 
-        tableau[6] = new Combinaison("Bonus si > à 62");
+        tableau[6] = new Combinaison("Brelan");
+        tableau[7] = new Combinaison("Carré");
+        tableau[8] = new Combinaison("Full");
+        tableau[9] = new Combinaison("Petite suite");
+        tableau[10] = new Combinaison("Grande suite");
+        tableau[11] = new Combinaison("Yams");
+        tableau[12] = new Combinaison("Chance");
 
-        tableau[7] = new Combinaison("Brelan");
-        tableau[8] = new Combinaison("Carré");
-        tableau[9] = new Combinaison("Full");
-        tableau[10] = new Combinaison("Petite suite");
-        tableau[11] = new Combinaison("Grande suite");
-        tableau[12] = new Combinaison("Yams");
-        tableau[13] = new Combinaison("Chance");
+        tableau[13] = new Combinaison("Sous-total 1");
+        tableau[14] = new Combinaison("Bonus si > à 62");
+        tableau[15] = new Combinaison("TOTAL 1");
+        tableau[16] = new Combinaison("TOTAL 2");
+        tableau[17] = new Combinaison("TOTAL 1+2");
         
         return tableau;
     }
     
     void listeCombinaison(Des des){
         for(int i=0;i<13;i++){
-            if(tableau[i].notSelected==true){
-                if(i<6){
+            if(tableau[i].getNotSelected()==true && i<6){
                 System.out.println((i+1) + ". Mettre " + des.somme(i+1) + " dans les " + (i+1));
-                }
+            }
+            if(tableau[i].getNotSelected()==true){
                 switch(i){
-                    case 6: System.out.println((i+1) + ". Mettre " + des.somme(des.brelan()) + " dans le brelan");
+                    case 6: System.out.println((i+1) + ". Mettre " + des.valeurBrelan() + " dans le brelan");
                     break;
 
-                    case 7: System.out.println((i+1) + ". Mettre " + des.somme(des.carre()) + " dans le carré");
+                    case 7: System.out.println((i+1) + ". Mettre " + des.valeurCarre() + " dans le carré");
                     break;
 
                     case 8: System.out.println((i+1) + ". Mettre " + des.full() + " dans le full");
@@ -200,18 +234,56 @@ public class Partie {
 
     void bonus(){
         int totalSomme = 0;
-        for (int i =0; i<6;i++){
-            totalSomme += tableau[i].valeur;
+        int nbCombinaisonRemplie =0;
+        for (int i=0; i<6; i++){
+            if(tableau[i].getNotSelected() == false){
+                nbCombinaisonRemplie += 1;
+            }
         }
-        if (totalSomme>62){
-            tableau[13].valeur = 35;
+        if (nbCombinaisonRemplie == 6){
+            for (int i =0; i<6;i++){
+            totalSomme += tableau[i].getValeur();
+            }
+            if (totalSomme>62){
+                tableau[13].setValeur(35);
+                System.out.println("Bonus accordé ! +35");
+            }
+            else{
+                tableau[13].setValeur(0);
+                System.out.println("Sous-total 1 < 63 : Pas de bonus");
+            }
         }
     }
+
     int scoreTotal(){
         int total=0;
         for (int i=0; i<14;i++){
-            total += tableau[i].valeur;
+            total += tableau[i].getValeur();
         }
         return total;
     }
+
+
+void calculScore(){
+    tableau[13].setValeur(0); //sous-total 1
+    tableau[15].setValeur(0); //Total 1
+    tableau[16].setValeur(0); //Total 2
+    tableau[17].setValeur(0); //TOTAL 1+2
+
+    int st1=0;
+
+    for(int i=0;i<6;i++){
+        st1 += tableau[i].getValeur();
+    }
+    tableau[13].setValeur(st1);
+    tableau[15].setValeur(tableau[13].getValeur() + tableau[14].getValeur());
+    int total1 = 0;
+
+    for (int i = 6; i<13;i++){
+        total1 += tableau[i].getValeur();
+    }
+    tableau[16].setValeur(total1);
+
+    tableau[17].setValeur(tableau[15].getValeur() + tableau[16].getValeur());
+}
 }
