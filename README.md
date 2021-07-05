@@ -1,2 +1,4 @@
-# laughing-robot
-Yams java project
+# Yams java project
+
+
+Playing Yams with command line tool
